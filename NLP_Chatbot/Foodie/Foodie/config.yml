@@ -1,0 +1,29 @@
+# Configuration for Rasa NLU.
+# https://rasa.com/docs/rasa/nlu/components/
+language: "en"
+
+pipeline:
+  - name: "WhitespaceTokenizer"
+    intent_tokenization_flag: True
+    intent_split_symbol: "+"
+  - name: "CountVectorsFeaturizer"
+  - name: "RegexFeaturizer"
+  - name: "LexicalSyntacticFeaturizer"
+  - name: "DIETClassifier"
+    batch_strategy: sequence
+    intent_classification: True
+    entity_recognition: True
+    epochs: 200
+  - name: "EntitySynonymMapper"
+  - name: "ResponseSelector"
+  
+# This key can be left empty. The pipeline will then be provided from a default configuration during training.
+
+# Configuration for Rasa Core.
+# https://rasa.com/docs/rasa/core/policies/
+policies:
+  - name: "MemoizationPolicy"
+    max_history: 5
+  - name: "TEDPolicy"
+    max_history: 5
+    epochs: 100
